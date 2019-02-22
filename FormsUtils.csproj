@@ -17,5 +17,6 @@
     <Folder Include="UI\ViewModels\" />
     <Folder Include="Models\" />
     <Folder Include="Abstractions\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 </Project>
