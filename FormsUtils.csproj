@@ -19,5 +19,6 @@
     <Folder Include="Abstractions\" />
     <Folder Include="UI\Behaviors\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Validation\" />
   </ItemGroup>
 </Project>

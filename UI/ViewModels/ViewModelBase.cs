@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Acr.UserDialogs;
 using FormsUtils.Abstractions;
 using FormsUtils.Models;
+using FormsUtils.Validation;
 using Xamarin.Forms;
 
 namespace FormsUtils.UI.ViewModels
@@ -60,6 +63,39 @@ namespace FormsUtils.UI.ViewModels
             var result = await UserDialogs.Instance.ConfirmAsync(confirmConfig);
             return result;
         }
+
+
+        #region Validation
+
+        /// <summary>
+        /// Applies validation to this View model instance, based on the
+        ///     attributes declared on its properties.
+        /// </summary>
+        /// <returns>True if this View Model is Valid.</returns>
+        protected async Task<bool> Validate(string alertTitle = "Atenção") {
+            //
+            // 1. Get Properties with validation attributes
+            var thisType = GetType();
+            var validatableProps = thisType.GetProperties()
+                .Where(prop => Attribute.IsDefined(prop, typeof(RequiredAttribute)));
+
+            //
+            // 2. Check each value
+            foreach (var prop in validatableProps) {
+                var value = (string)prop.GetValue(this);
+                if (string.IsNullOrWhiteSpace(value)) {
+                    var attribute = (RequiredAttribute)prop.GetCustomAttribute(typeof(RequiredAttribute));
+                    await DisplayAlert(alertTitle, attribute.ErrorMessage);
+                    return false;
+                }
+            }
+
+            //
+            // 3. If it get here then it's valid
+            return true;
+        }
+
+        #endregion
 
 
         #region IOperationContainer Implementation
