@@ -14,10 +14,18 @@ namespace FazendaDigital.Components
     {
         readonly IContainer container;
         readonly Dictionary<Type, Type> pagesToModels;
+        readonly INavigationPageFactory navigationPageFactory;
 
         public AutofacPageResolver(IContainer container, Dictionary<Type, Type> pagesToModels) {
             this.container = container;
             this.pagesToModels = pagesToModels;
+            navigationPageFactory = new DefaultPageNavigationFactory();
+        }
+
+        public AutofacPageResolver(IContainer container, Dictionary<Type, Type> pagesToModels, INavigationPageFactory navigationPageFactory) {
+            this.container = container;
+            this.pagesToModels = pagesToModels;
+            this.navigationPageFactory = navigationPageFactory;
         }
 
         public Page Resolve<TPage>() where TPage : Page {
@@ -45,7 +53,7 @@ namespace FazendaDigital.Components
         }
 
         object ResolveModel<TPage>(ILifetimeScope scope, TPage page) where TPage : Page {
-            var navigationService = new NavigationService(page.Navigation, this);
+            var navigationService = new NavigationService(page.Navigation, this, navigationPageFactory);
             var viewModelT = pagesToModels[typeof(TPage)];
             var viewModel = scope.Resolve(viewModelT,
                 new TypedParameter(typeof(INavigationService), navigationService),
@@ -55,7 +63,7 @@ namespace FazendaDigital.Components
         }
 
         object ResolveModel<TPage, TArgs>(ILifetimeScope scope, TPage page, TArgs args) where TPage : Page {
-            var navigationService = new NavigationService(page.Navigation, this);
+            var navigationService = new NavigationService(page.Navigation, this, navigationPageFactory);
             var viewModelT = pagesToModels[typeof(TPage)];
             var viewModel = scope.Resolve(viewModelT,
                 new TypedParameter(typeof(INavigationService), navigationService),

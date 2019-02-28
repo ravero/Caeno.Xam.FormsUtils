@@ -12,10 +12,12 @@ namespace FormsUtils.Components
     {
         readonly INavigation navigation;
         readonly IPageResolver pageResolver;
+        readonly INavigationPageFactory navigationPageFactory;
 
-        public NavigationService(INavigation navigation, IPageResolver pageResolver) {
+        public NavigationService(INavigation navigation, IPageResolver pageResolver, INavigationPageFactory navigationPageFactory) {
             this.navigation = navigation;
             this.pageResolver = pageResolver;
+            this.navigationPageFactory = navigationPageFactory;
         }
 
         public async Task PresentAsync<TPage>() where TPage : Page {
@@ -31,7 +33,7 @@ namespace FormsUtils.Components
         public async Task PresentModalAsync<TPage>(bool addToNavigationPage) where TPage : Page {
             var page = pageResolver.Resolve<TPage>();
             if (addToNavigationPage)
-                await navigation.PushModalAsync(new NavigationPage(page));
+                await navigation.PushModalAsync(navigationPageFactory.CreateNavigationPage(page));
             else
                 await navigation.PushModalAsync(page);
         }
@@ -39,7 +41,7 @@ namespace FormsUtils.Components
         public async Task PresentModalAsync<TPage, TArgs>(TArgs args, bool addToNavigationPage = false) where TPage : Page {
             var page = pageResolver.Resolve<TPage, TArgs>(args);
             if (addToNavigationPage)
-                await navigation.PushModalAsync(new NavigationPage(page));
+                await navigation.PushModalAsync(navigationPageFactory.CreateNavigationPage(page));
             else
                 await navigation.PushModalAsync(page);
         }
