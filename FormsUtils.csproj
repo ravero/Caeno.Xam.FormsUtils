@@ -20,5 +20,6 @@
     <Folder Include="UI\Behaviors\" />
     <Folder Include="Helpers\" />
     <Folder Include="Validation\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 </Project>
