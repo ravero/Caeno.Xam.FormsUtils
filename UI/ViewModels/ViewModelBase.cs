@@ -30,6 +30,8 @@ namespace FormsUtils.UI.ViewModels
 
         public virtual ICommand DisappearingCommand => new Command(() => { }, () => false);
 
+        public virtual bool OnBackPressed() => true;
+
         public ViewModelBase() { }
 
         protected async Task Process(Func<Task> action, string loadingTitle = null) {

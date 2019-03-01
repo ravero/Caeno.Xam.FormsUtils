@@ -26,6 +26,13 @@ namespace FormsUtils.UI.Pages
 
             base.OnDisappearing();
         }
+
+        protected override bool OnBackButtonPressed() {
+            if (BindingContext is ViewModelBase viewModel)
+                return viewModel.OnBackPressed();
+
+            return base.OnBackButtonPressed();
+        }
     }
 }
 
