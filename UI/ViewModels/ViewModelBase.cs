@@ -28,7 +28,11 @@ namespace FormsUtils.UI.ViewModels
 
         public virtual ICommand AppearingCommand => new Command(() => { }, () => false);
 
+        public virtual void OnAppearing() { }
+
         public virtual ICommand DisappearingCommand => new Command(() => { }, () => false);
+
+        public virtual void OnDisappearing() { }
 
         public virtual bool OnBackPressed() => true;
 
@@ -66,6 +70,8 @@ namespace FormsUtils.UI.ViewModels
             return result;
         }
 
+        protected async Task<string> DisplayActionSheet(string title, string cancel, string destructive, params string[] options) => 
+            await UserDialogs.Instance.ActionSheetAsync(title, cancel, destructive, null, options);
 
         #region Validation
 
