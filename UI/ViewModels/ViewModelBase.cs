@@ -80,7 +80,7 @@ namespace FormsUtils.UI.ViewModels
         ///     attributes declared on its properties.
         /// </summary>
         /// <returns>True if this View Model is Valid.</returns>
-        protected async Task<bool> Validate(string alertTitle = "Atenção") {
+        protected virtual async Task<bool> Validate(string alertTitle = "Atenção") {
             //
             // 1. Get Properties with validation attributes
             var thisType = GetType();
