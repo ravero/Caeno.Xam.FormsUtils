@@ -2,6 +2,7 @@
 
 using Xamarin.Forms;
 using FormsUtils.UI.ViewModels;
+using System.Threading.Tasks;
 
 namespace FormsUtils.UI.Pages
 {
@@ -13,9 +14,9 @@ namespace FormsUtils.UI.Pages
     {
         protected override void OnAppearing() {
             if (BindingContext is ViewModelBase viewModel) {
-                viewModel.OnAppearing();
-                if (viewModel.AppearingCommand.CanExecute(null))
-                    viewModel.AppearingCommand.Execute(null);
+                viewModel.AppearingAction?.Invoke();
+                if (viewModel.AppearingTask != null)
+                    Task.Run(viewModel.AppearingTask);
             }
 
             base.OnAppearing();
@@ -23,11 +24,11 @@ namespace FormsUtils.UI.Pages
 
         protected override void OnDisappearing() {
             if (BindingContext is ViewModelBase viewModel) {
-                viewModel.OnDisappearing();
-                if (viewModel.DisappearingCommand.CanExecute(null))
-                    viewModel.DisappearingCommand.Execute(null);
+                viewModel.DisappearingAction?.Invoke();
+                if (viewModel.DisappearingTask != null)
+                    Task.Run(viewModel.DisappearingTask);
             }
-
+                
             base.OnDisappearing();
         }
 

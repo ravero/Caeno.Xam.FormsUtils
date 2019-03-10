@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -6,7 +7,6 @@ using System.Windows.Input;
 using Acr.UserDialogs;
 using FormsUtils.Abstractions;
 using FormsUtils.Models;
-using FormsUtils.Validation;
 using Xamarin.Forms;
 
 namespace FormsUtils.UI.ViewModels
@@ -26,17 +26,38 @@ namespace FormsUtils.UI.ViewModels
             set => SetProperty(ref _loadingTitle, value);
         }
 
-        public virtual ICommand AppearingCommand => new Command(() => { }, () => false);
+        /// <summary>
+        /// An Action to be executed synchronously on the OnAppearing event of the page lifecycle.
+        /// Override it to provide the Action implementation.
+        /// </summary>
+        public virtual Action AppearingAction { get; }
 
-        public virtual void OnAppearing() { }
+        /// <summary>
+        /// A Task to be executed asynchronously on the OnAppearing event of the page lifecycle.
+        /// Override it to provide the Task implementation.
+        /// </summary>
+        public virtual Func<Task> AppearingTask { get; }
 
-        public virtual ICommand DisappearingCommand => new Command(() => { }, () => false);
+        /// <summary>
+        /// An Action to be executed synchronously on the OnDisappearing event of the page lifecycle.
+        /// Override it to provide the Action implementation.
+        /// </summary>
+        public virtual Action DisappearingAction { get; }
 
-        public virtual void OnDisappearing() { }
+        /// <summary>
+        /// A Task to be executed asynchronously on the OnDisappearing event of the page lifecycle.
+        /// Override it to provide the Task implementation.
+        /// </summary>
+        public virtual Func<Task> DisappearingTask { get; }
 
+        /// <summary>
+        /// Allow the default behavior of the Back Button to be overriden.
+        /// </summary>
+        /// <returns>
+        ///     <c>true</c> to let the operating system handle the Back behavior, 
+        ///     <c>false</c> otherwise.
+        /// </returns>
         public virtual bool OnBackPressed() => true;
-
-        public ViewModelBase() { }
 
         protected async Task Process(Func<Task> action, string loadingTitle = null) {
             loadingTitle = loadingTitle ?? LoadingTitle;
