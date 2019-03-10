@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Rg.Plugins.Popup.Pages;
 
 namespace FormsUtils.Services
 {
@@ -17,5 +18,11 @@ namespace FormsUtils.Services
         Task DismissAsync();
 
         Task DismissModalAsync();
+
+        Task PresentPopupAsync<TPage>() where TPage : PopupPage;
+
+        Task PresentPopupAsync<TPage, TArgs>(TArgs args) where TPage : PopupPage;
+
+        Task DismissPopupAsync();
     }
 }

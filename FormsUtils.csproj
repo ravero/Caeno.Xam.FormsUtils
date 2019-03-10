@@ -9,6 +9,7 @@
     <PackageReference Include="Autofac" Version="4.9.1" />
     <PackageReference Include="Acr.UserDialogs" Version="7.0.4" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="1.1.5.188" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

@@ -18,7 +18,11 @@ namespace FormsUtils.UI.ViewModels
     {
         IProgressDialog progressDialog;
 
-        protected bool IsRunningProcessing { get; private set; }
+        bool _isProcessing;
+        public bool IsProcessing {
+            get => _isProcessing;
+            set => SetProperty(ref _isProcessing, value);
+        }
 
         string _loadingTitle = "Carregando";
         public string LoadingTitle {
@@ -62,7 +66,9 @@ namespace FormsUtils.UI.ViewModels
         protected async Task Process(Func<Task> action, string loadingTitle = null) {
             loadingTitle = loadingTitle ?? LoadingTitle;
             using (var progress = UserDialogs.Instance.Loading(loadingTitle)) {
+                IsProcessing = true;
                 await action();
+                IsProcessing = false;
             }
         }
 
@@ -70,7 +76,9 @@ namespace FormsUtils.UI.ViewModels
             loadingTitle = loadingTitle ?? LoadingTitle;
             T result;
             using (var progress = UserDialogs.Instance.Loading(loadingTitle)) {
+                IsProcessing = true;
                 result = await action();
+                IsProcessing = false;
             }
             return result;
         }

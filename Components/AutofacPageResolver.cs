@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using Autofac;
 using FormsUtils.Services;
 using FormsUtils.Components;
+using Rg.Plugins.Popup.Contracts;
 
 namespace FazendaDigital.Components
 {
@@ -53,7 +54,8 @@ namespace FazendaDigital.Components
         }
 
         object ResolveModel<TPage>(ILifetimeScope scope, TPage page) where TPage : Page {
-            var navigationService = new NavigationService(page.Navigation, this, navigationPageFactory);
+            var popupNavigation = scope.Resolve<IPopupNavigation>();
+            var navigationService = new NavigationService(page.Navigation, popupNavigation, this, navigationPageFactory);
             var viewModelT = pagesToModels[typeof(TPage)];
             var viewModel = scope.Resolve(viewModelT,
                 new TypedParameter(typeof(INavigationService), navigationService),
@@ -63,7 +65,8 @@ namespace FazendaDigital.Components
         }
 
         object ResolveModel<TPage, TArgs>(ILifetimeScope scope, TPage page, TArgs args) where TPage : Page {
-            var navigationService = new NavigationService(page.Navigation, this, navigationPageFactory);
+            var popupNavigation = scope.Resolve<IPopupNavigation>();
+            var navigationService = new NavigationService(page.Navigation, popupNavigation, this, navigationPageFactory);
             var viewModelT = pagesToModels[typeof(TPage)];
             var viewModel = scope.Resolve(viewModelT,
                 new TypedParameter(typeof(INavigationService), navigationService),
