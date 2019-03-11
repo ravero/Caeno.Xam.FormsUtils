@@ -12,21 +12,21 @@ namespace FormsUtils.UI.Pages
     /// </summary>
     public abstract class PageBase : ContentPage
     {
-        protected override void OnAppearing() {
+        protected override async void OnAppearing() {
             if (BindingContext is ViewModelBase viewModel) {
                 viewModel.AppearingAction?.Invoke();
                 if (viewModel.AppearingTask != null)
-                    Task.Run(viewModel.AppearingTask);
+                    await viewModel.AppearingTask();
             }
 
             base.OnAppearing();
         }
 
-        protected override void OnDisappearing() {
+        protected override async void OnDisappearing() {
             if (BindingContext is ViewModelBase viewModel) {
                 viewModel.DisappearingAction?.Invoke();
                 if (viewModel.DisappearingTask != null)
-                    Task.Run(viewModel.DisappearingTask);
+                    await viewModel.DisappearingTask();
             }
                 
             base.OnDisappearing();
