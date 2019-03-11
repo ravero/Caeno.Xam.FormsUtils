@@ -20,13 +20,9 @@ namespace FazendaDigital.Components
         public AutofacPageResolver(IContainer container, Dictionary<Type, Type> pagesToModels) {
             this.container = container;
             this.pagesToModels = pagesToModels;
-            navigationPageFactory = new DefaultPageNavigationFactory();
-        }
 
-        public AutofacPageResolver(IContainer container, Dictionary<Type, Type> pagesToModels, INavigationPageFactory navigationPageFactory) {
-            this.container = container;
-            this.pagesToModels = pagesToModels;
-            this.navigationPageFactory = navigationPageFactory;
+            using (var scope = container.BeginLifetimeScope())
+                navigationPageFactory = scope.ResolveOptional<INavigationPageFactory>() ?? new DefaultPageNavigationFactory();
         }
 
         public Page Resolve<TPage>() where TPage : Page {
