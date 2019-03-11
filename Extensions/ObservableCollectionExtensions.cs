@@ -12,5 +12,8 @@ namespace FormsUtils.Extensions
             foreach (var item in items)
                 collection.Add(item);
         }
+
+        public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> enumerable) =>
+            new ObservableCollection<T>(enumerable);
     }
 }
