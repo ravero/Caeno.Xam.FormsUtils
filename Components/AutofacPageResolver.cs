@@ -40,7 +40,9 @@ namespace FazendaDigital.Components
         public Page Resolve<TPage, TArgs>(TArgs arguments) where TPage : Page {
             using (var scope = container.BeginLifetimeScope()) {
                 var pageT = typeof(TPage);
-                var page = (TPage)scope.Resolve(pageT, new TypedParameter(typeof(IPageResolver), this));
+                var page = (TPage)scope.Resolve(pageT, 
+                    new TypedParameter(typeof(IPageResolver), this),
+                    new TypedParameter(typeof(TArgs), arguments));
 
                 if (pagesToModels.ContainsKey(pageT))
                     page.BindingContext = ResolveModel(scope, page, arguments);
