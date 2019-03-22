@@ -63,9 +63,15 @@ namespace FormsUtils.UI.ViewModels
         /// </returns>
         public virtual bool OnBackPressed() => true;
 
-        protected async Task Process(Func<Task> action, string loadingTitle = null) {
+        protected async Task Process(Func<Task> action, bool isShowDialog = true, string loadingTitle = null) {
             loadingTitle = loadingTitle ?? LoadingTitle;
-            using (var progress = UserDialogs.Instance.Loading(loadingTitle)) {
+            if (isShowDialog) {
+                using (var progress = UserDialogs.Instance.Loading(loadingTitle)) {
+                    IsProcessing = true;
+                    await action();
+                    IsProcessing = false;
+                }
+            } else {
                 IsProcessing = true;
                 await action();
                 IsProcessing = false;

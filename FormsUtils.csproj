@@ -23,5 +23,6 @@
     <Folder Include="Helpers\" />
     <Folder Include="Extensions\" />
     <Folder Include="UI\Converters\" />
+    <Folder Include="UI\Controls\" />
   </ItemGroup>
 </Project>
