@@ -138,6 +138,35 @@ namespace FormsUtils.UI.ViewModels
             return true;
         }
 
+        protected virtual bool CheckValidatables() {
+            var thisType = GetType();
+            var validatableType = typeof(Validatable<>);
+            var validatableProps = thisType.GetProperties()
+                .Where(prop => IsSubclassOfOpenGeneric(validatableType, prop.PropertyType));
+
+            var result = true;
+            foreach (var prop in validatableProps) {
+                var @object = prop.GetValue(this);
+                var validateMethod = prop.PropertyType.GetMethod(nameof(Validatable<object>.Validate));
+                validateMethod.Invoke(@object, null);
+
+                var isValidProperty = prop.PropertyType.GetProperty(nameof(Validatable<object>.IsValid));
+                result = (bool)isValidProperty.GetValue(@object) && result;
+            }
+            return result;
+        }
+
+        static bool IsSubclassOfOpenGeneric(Type generic, Type toCheck) {
+            while (toCheck != null && toCheck != typeof(object)) {
+                var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
+                if (generic == cur)
+                    return true;
+
+                toCheck = toCheck.BaseType;
+            }
+            return false;
+        }
+
         #endregion
 
 
