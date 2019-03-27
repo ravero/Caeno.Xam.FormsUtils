@@ -1,9 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Collections.Generic;
+using FormsUtils.Validators;
+using System.Linq;
 
-namespace FormsUtils.Models
+namespace FormsUtils.Validatables
 {
-    public class RequiredString : Validatable<string>
+    public class StringValidatable : Validatable<string>
     {
         bool _validateOnValueChanged;
         public bool ValidateOnValueChanged {
@@ -17,9 +20,10 @@ namespace FormsUtils.Models
             }
         }
 
-        public RequiredString(string errorMessage, bool validateOnValueChanged = false) {
-            ErrorMessage = errorMessage;
+        public StringValidatable(string requiredMessage = null, bool isRequired = true, bool validateOnValueChanged = true) {
             ValidateOnValueChanged = validateOnValueChanged;
+            if (isRequired)
+                AddValidator(new RequiredStringValidator(requiredMessage));
         }
 
         void OnLocalPropertyChanged(object sender, PropertyChangedEventArgs e) {
@@ -27,6 +31,8 @@ namespace FormsUtils.Models
                 Validate();
         }
 
-        public override void Validate() => IsValid = !string.IsNullOrWhiteSpace(Value);
+        public override string ToString() => Value;
+
+        public static implicit operator string(StringValidatable str) => str.Value;
     }
 }
