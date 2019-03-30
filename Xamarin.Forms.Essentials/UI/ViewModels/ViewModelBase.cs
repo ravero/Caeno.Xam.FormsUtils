@@ -7,7 +7,7 @@ using System.Windows.Input;
 using Acr.UserDialogs;
 using FormsUtils.Abstractions;
 using FormsUtils.Models;
-using FormsUtils.Validatables;
+using FormsUtils.Validation;
 using Xamarin.Forms;
 
 namespace FormsUtils.UI.ViewModels

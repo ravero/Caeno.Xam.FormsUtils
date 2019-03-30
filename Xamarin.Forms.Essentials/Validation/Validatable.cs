@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using FormsUtils.Models;
 using System.Linq;
-using FormsUtils.Validators;
 
-namespace FormsUtils.Validatables
+namespace FormsUtils.Validation
 {
     public class Validatable<T> : ObservableBase
     {
@@ -28,7 +27,7 @@ namespace FormsUtils.Validatables
             set => SetProperty(ref _errorMessage, value);
         }
 
-        protected void AddValidator(IValidator<T> validator) => validators.Add(validator);
+        public void AddValidator(IValidator<T> validator) => validators.Add(validator);
 
         public virtual void Validate() {
             foreach (var validator in validators) {

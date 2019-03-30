@@ -1,11 +1,12 @@
 ﻿using System;
-namespace FormsUtils.Validators
+
+namespace FormsUtils.Validation.Validators
 {
-    public class RequiredStringValidator : IValidator<string>
+    public class RequiredValidator : IValidator<string>
     {
         readonly string errorMessage;
 
-        public RequiredStringValidator(string errorMessage) => 
+        public RequiredValidator(string errorMessage) => 
             this.errorMessage = errorMessage ?? 
                 throw new ArgumentNullException(nameof(errorMessage));
 
