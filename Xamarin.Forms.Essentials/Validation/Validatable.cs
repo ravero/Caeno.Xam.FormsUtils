@@ -58,7 +58,7 @@ namespace FormsUtils.Validation
         /// This method is virtual and may be overriden to provide an alternative implementation.
         /// </summary>
         public virtual void Validate() {
-            foreach (var validator in Validators) {
+            foreach (var validator in Validators.OrderBy(v => v.Order)) {
                 var validation = validator.Validate(Value);
                 if (!validation.IsValid) {
                     IsValid = false;

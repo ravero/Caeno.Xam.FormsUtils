@@ -17,6 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Validation\" />
+    <Folder Include="Validation\Validators\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.Essentials\Xamarin.Forms.Essentials.csproj" />

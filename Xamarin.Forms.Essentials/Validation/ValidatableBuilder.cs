@@ -10,11 +10,11 @@ namespace Xamarin.Forms.Essentials.Validation
 
         public static ValidatableBuilder<string> CreateText() => new ValidatableBuilder<string>(new Validatable<string>());
 
-        public static ValidatableBuilder<string> WithRequired(this ValidatableBuilder<string> validatable, string errorMessage) =>
-            validatable.WithValidator(new RequiredValidator(errorMessage));
+        public static ValidatableBuilder<string> WithRequired(this ValidatableBuilder<string> validatable, string errorMessage, int order = 0) =>
+            validatable.WithValidator(new RequiredValidator(errorMessage, order));
 
-        public static ValidatableBuilder<string> WithEmail(this ValidatableBuilder<string> validatable, string errorMessage) =>
-            validatable.WithValidator(new EmailValidator(errorMessage));
+        public static ValidatableBuilder<string> WithEmail(this ValidatableBuilder<string> validatable, string errorMessage, int order) =>
+            validatable.WithValidator(new EmailValidator(errorMessage, order));
     }
 
     public class ValidatableBuilder<T>

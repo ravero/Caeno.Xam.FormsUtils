@@ -8,6 +8,11 @@ namespace FormsUtils.Validation
     public interface IValidator<T>
     {
         /// <summary>
+        /// Determines the Order that this Validator should be applied.
+        /// </summary>
+        int Order { get; }
+
+        /// <summary>
         /// Validates the Value.
         /// </summary>
         /// <returns>
