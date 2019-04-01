@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FormsUtils.Validation.Validators
+namespace Xamarin.Forms.Essentials.Validation.Validators
 {
     public class RequiredValidator : IValidator<string> {
         readonly string errorMessage;

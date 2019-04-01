@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace FormsUtils.Validation.Validators
+namespace Xamarin.Forms.Essentials.Validation.Validators
 {
     public class EmailValidator : IValidator<string>
     {

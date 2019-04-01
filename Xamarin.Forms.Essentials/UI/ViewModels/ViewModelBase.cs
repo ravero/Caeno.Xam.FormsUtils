@@ -7,8 +7,8 @@ using System.Windows.Input;
 using Acr.UserDialogs;
 using FormsUtils.Abstractions;
 using FormsUtils.Models;
-using FormsUtils.Validation;
 using Xamarin.Forms;
+using Xamarin.Forms.Essentials.Validation;
 
 namespace FormsUtils.UI.ViewModels
 {

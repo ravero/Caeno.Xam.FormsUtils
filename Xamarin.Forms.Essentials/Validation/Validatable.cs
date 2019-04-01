@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FormsUtils.Models;
 using System.Linq;
 
-namespace FormsUtils.Validation
+namespace Xamarin.Forms.Essentials.Validation
 {
     /// <summary>
     /// Represents a Validatable Value.

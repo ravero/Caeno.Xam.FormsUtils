@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FormsUtils.Validation
+namespace Xamarin.Forms.Essentials.Validation
 {
     /// <summary>
     /// Represents a Validator of the Specified Type.

@@ -1,8 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
 using Xamarin.Forms.Essentials.Validation;
-using FormsUtils.Validation.Validators;
 using System.Linq;
+using Xamarin.Forms.Essentials.Validation.Validators;
 
 namespace Validation
 {

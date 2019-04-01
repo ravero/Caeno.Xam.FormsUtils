@@ -1,6 +1,5 @@
 ﻿using System;
-using FormsUtils.Validation;
-using FormsUtils.Validation.Validators;
+using Xamarin.Forms.Essentials.Validation.Validators;
 
 namespace Xamarin.Forms.Essentials.Validation
 {
