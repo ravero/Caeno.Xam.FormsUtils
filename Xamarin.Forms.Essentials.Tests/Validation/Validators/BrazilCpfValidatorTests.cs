@@ -1,5 +1,6 @@
 ﻿using System;
-namespace Xamarin.Forms.Essentials.Tests.Validation.Validators
+
+namespace Validation.Validators
 {
     public class BrazilCpfValidatorTests
     {

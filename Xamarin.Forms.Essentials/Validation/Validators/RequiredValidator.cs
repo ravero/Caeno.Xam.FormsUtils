@@ -2,7 +2,8 @@
 
 namespace Xamarin.Forms.Essentials.Validation.Validators
 {
-    public class RequiredValidator : IValidator<string> {
+    public class RequiredValidator : IValidator<string>
+    {
         readonly string errorMessage;
 
         public int Order { get; }

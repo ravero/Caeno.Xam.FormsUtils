@@ -7,7 +7,7 @@ namespace Xamarin.Forms.Essentials.Validation
     {
         public static ValidatableBuilder<T> Create<T>() => new ValidatableBuilder<T>(new Validatable<T>());
 
-        public static ValidatableBuilder<string> CreateText() => new ValidatableBuilder<string>(new Validatable<string>());
+        public static TextValidatableBuilder CreateText() => new TextValidatableBuilder(new TextValidatable());
 
         public static ValidatableBuilder<string> WithRequired(this ValidatableBuilder<string> validatable, string errorMessage, int order = 0) =>
             validatable.WithValidator(new RequiredValidator(errorMessage, order));
@@ -18,7 +18,7 @@ namespace Xamarin.Forms.Essentials.Validation
 
     public class ValidatableBuilder<T>
     {
-        Validatable<T> validatable;
+        protected Validatable<T> validatable;
 
         public ValidatableBuilder(Validatable<T> validatable) {
             this.validatable = validatable;
@@ -30,5 +30,13 @@ namespace Xamarin.Forms.Essentials.Validation
         }
 
         public Validatable<T> Build() => validatable;
+    }
+
+    public class TextValidatableBuilder : ValidatableBuilder<string>
+    {
+        public TextValidatableBuilder(TextValidatable validatable) : base(validatable) {
+        }
+
+        public new TextValidatable Build() => (TextValidatable)validatable;
     }
 }
