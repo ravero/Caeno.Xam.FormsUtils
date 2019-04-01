@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using Xamarin.Forms.Essentials.Tests.Fakes;
 using Xamarin.Forms.Essentials.Validation;
 
 namespace Validation
@@ -48,9 +49,9 @@ namespace Validation
                 "ErrorMessage3",
             };
             var validators = new[] {
-                new FakeValidator { Message = errorMessages[0], Order = 1 },
-                new FakeValidator { Message = errorMessages[1], Order = 2 },
-                new FakeValidator { Message = errorMessages[2], Order = 3 },
+                new FakeValidator<object> { Message = errorMessages[0], Order = 1 },
+                new FakeValidator<object> { Message = errorMessages[1], Order = 2 },
+                new FakeValidator<object> { Message = errorMessages[2], Order = 3 },
             };
             var validatable = ValidatableBuilder.Create<object>()
                 .WithValidator(validators[0])
@@ -70,17 +71,6 @@ namespace Validation
         Validatable<object> MakeValidatable() => ValidatableBuilder.Create<object>().Build();
 
         #region Fakes
-        class FakeValidator : IValidator<object>
-        {
-            public bool IsValid { get; set; }
-
-            public int Order { get; set; }
-
-            public string Message { get; set; }
-
-            public (bool IsValid, string ErrorMessage) Validate(object value) => (IsValid, Message);
-        }
-
         class AlwaysTrueValidator : IValidator<object>
         {
             public int Order { get; }
