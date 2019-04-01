@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace FormsUtils.Validators
+namespace Xamarin.Forms.Essentials.Validation.Validators
 {
     public class EmailValidator : IValidator<string>
     {
         readonly string errorMessage;
 
-        public EmailValidator(string errorMessage) => 
-            this.errorMessage = errorMessage ?? 
-                throw new ArgumentNullException(nameof(errorMessage));
+        public int Order { get; }
+
+        public EmailValidator(string errorMessage, int order = 0) {
+            this.errorMessage = errorMessage ?? throw new ArgumentNullException(nameof(errorMessage));
+            Order = order;
+        }
 
         public (bool IsValid, string ErrorMessage) Validate(string value) {
             if (value.Length == 0)

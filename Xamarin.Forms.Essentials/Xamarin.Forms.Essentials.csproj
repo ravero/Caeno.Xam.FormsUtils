@@ -24,7 +24,7 @@
     <Folder Include="Extensions\" />
     <Folder Include="UI\Converters\" />
     <Folder Include="UI\Controls\" />
-    <Folder Include="Validatables\" />
-    <Folder Include="Validators\" />
+    <Folder Include="Validation\" />
+    <Folder Include="Validation\Validators\" />
   </ItemGroup>
 </Project>
