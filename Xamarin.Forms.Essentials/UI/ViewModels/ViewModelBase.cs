@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Acr.UserDialogs;
@@ -79,6 +80,34 @@ namespace FormsUtils.UI.ViewModels
             }
         }
 
+        protected async Task Process(Func<CancellationToken, Task> action, Action onCancelAction, TimeSpan? timeout)
+        {
+            var cancellationTokenSource = timeout.HasValue ? new CancellationTokenSource(timeout.Value) : new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
+
+            using (var progress = UserDialogs.Instance.Loading(LoadingTitle, OnCancelAction, "Cancelar"))
+            {
+                IsProcessing = true;
+                try
+                {
+                    await action(cancellationToken);
+                    IsProcessing = false;
+                }
+                catch (TaskCanceledException ex)
+                {
+                    IsProcessing = false;
+                    onCancelAction?.Invoke();
+                }
+            }
+
+            void OnCancelAction()
+            {
+                cancellationTokenSource.Cancel();
+            }
+        }
+
+        protected Task Process(Func<CancellationToken, Task> action, Action onCancelAction) => Process(action, onCancelAction, TimeSpan.FromMinutes(2));
+
         protected async Task<T> ProcessWithResult<T>(Func<Task<T>> action, string loadingTitle = null) {
             loadingTitle = loadingTitle ?? LoadingTitle;
             T result;
@@ -89,6 +118,38 @@ namespace FormsUtils.UI.ViewModels
             }
             return result;
         }
+
+        protected async Task<(bool, T)> ProcessWithResult<T>(Func<CancellationToken, Task<T>> action, TimeSpan? timeout) where T : class
+        {
+            var cancellationTokenSource = timeout.HasValue ? new CancellationTokenSource(timeout.Value) : new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
+
+            T result;
+            using (var progress = UserDialogs.Instance.Loading(LoadingTitle, OnCancelAction, "Cancelar"))
+            {
+                IsProcessing = true;
+                try
+                {
+                    result = await action(cancellationToken);
+                    IsProcessing = false;
+                }
+                catch (TaskCanceledException ex)
+                {
+                    IsProcessing = false;
+                    return (false, null);
+                }
+                
+            }
+            return (true, result);
+
+            void OnCancelAction()
+            {
+                cancellationTokenSource.Cancel();
+                IsProcessing = false;
+            }
+        }
+
+        protected Task<(bool, T)> ProcessWithResult<T>(Func<CancellationToken, Task<T>> action) where T : class => ProcessWithResult(action, TimeSpan.FromMinutes(2));
 
         protected async Task DisplayAlert(string title, string message, string cancel = "OK") {
             await UserDialogs.Instance.AlertAsync(message, title, cancel);
