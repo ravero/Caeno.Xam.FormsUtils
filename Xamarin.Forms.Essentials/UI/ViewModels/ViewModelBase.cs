@@ -93,7 +93,7 @@ namespace FormsUtils.UI.ViewModels
                     await action(cancellationToken);
                     IsProcessing = false;
                 }
-                catch (TaskCanceledException ex)
+                catch (OperationCanceledException ex)
                 {
                     IsProcessing = false;
                     onCancelAction?.Invoke();
@@ -133,7 +133,7 @@ namespace FormsUtils.UI.ViewModels
                     result = await action(cancellationToken);
                     IsProcessing = false;
                 }
-                catch (TaskCanceledException ex)
+                catch (OperationCanceledException ex)
                 {
                     IsProcessing = false;
                     return (false, null);
